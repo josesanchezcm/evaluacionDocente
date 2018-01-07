@@ -36,6 +36,7 @@
     <script src="../controller/generarreporte.js"></script>
     <script src="//cdn.zingchart.com/zingchart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
     <style>
         #tblheader {
@@ -124,10 +125,16 @@
         </nav>
 
         
+        <div class="col-lg-12">
+            <button type="button" class="btn btn-success pull-right" id="btn-generar-evaluacion">Generar </button>
+        </div>
+
+
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+
                         <table class="page-header" id="tblheader">
                                 <tr >
                                     <td><img src="../img/logoutng.jpg" alt="" style="width: 100px;"></td>
@@ -295,13 +302,24 @@ $zc->render();
                 </div>
             </div>
         </div>
-
     </div>
 
     
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/metisMenu.min.js"></script>
     <script src="../assets/js/sb-admin-2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#btn-generar-evaluacion').click(function () {
+                var doc = new jsPDF();
+                doc.addHTML($('#page-wrapper')[0], 15, 15, {
+                    'background': '#fff',
+                }, function() {
+                    doc.save('reporte_evaluacion.pdf');
+                });
+            });
+        });
+    </script>
     <script>
 var ctx = document.getElementById("myChart").getContext('2d');
 var jsdata=<?php echo json_encode($datos);?>;
